@@ -1,5 +1,13 @@
+import { Card } from "./components/styles/Card.styled";
+import { Button } from "./components/styles/Button.styled";
+
 function App() {
-  return <h1>Metaweather</h1>;
+  return (
+    <Card>
+      <h1>MetaWeather</h1>
+      <Button>Styled Button</Button>
+    </Card>
+  );
 }
 
 export default App;
