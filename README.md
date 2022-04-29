@@ -31,6 +31,7 @@ Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ipsam p
 Dependencies used for this project:
 
 - [React](https://reactjs.org/)
+- [Styled Components](https://styled-components.com/)
 - [Axios](https://github.com/axios/axios)
 - [MetaWeather API](https://www.metaweather.com/api/)
 
