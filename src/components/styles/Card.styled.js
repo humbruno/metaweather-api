@@ -7,4 +7,10 @@ export const Card = styled.div`
 
   background-color: #1e213a;
   max-width: 100%;
+
+  strong {
+    color: #e7e7eb;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+  }
 `;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import useHttp from "./hooks/use-http";
 
 import cities from "./data/cities";
 
@@ -10,23 +10,13 @@ import { FlexContainer } from "./components/styles/FlexContainer.styled";
 import ForecastItem from "./components/ForecastItem/ForecastItem";
 
 function App() {
-  const [weatherInfo, setWeatherInfo] = useState([]);
+  const [weatherInfo, setWeatherInfo] = useState(null);
 
-  const fetchWeather = async (woeid) => {
-    try {
-      const response = await axios.get(
-        `https://www.metaweather.com/api/location/${woeid}`
-      );
-      setWeatherInfo(response.data.consolidated_weather.slice(1)); //The array gets sliced after the first index because it initially returns 6 items (current day + next 5 days), but here we only want the next 5 days
+  const { isLoading, error, sendRequest: fetchForecast } = useHttp();
 
-      console.log(weatherInfo);
-    } catch (error) {
-      console.log(error.response.data);
-    }
-  };
-
-  const clickHandler = (id) => {
-    fetchWeather(id);
+  const clickHandler = async (woeid) => {
+    const url = `https://www.metaweather.com/api/location/${woeid}`;
+    fetchForecast(url, setWeatherInfo);
   };
 
   return (
@@ -42,18 +32,24 @@ function App() {
           ))}
         </FlexContainer>
         <FlexContainer>
-          {weatherInfo.map((weather) => (
-            <ForecastItem
-              key={Math.random()}
-              day={weather.applicable_date}
-              icon={weather.weather_state_abbr}
-              temp={weather.the_temp}
-              min={weather.min_temp}
-              max={weather.max_temp}
-              speed={weather.wind_speed}
-              direction={weather.wind_direction_compass}
-            />
-          ))}
+          {isLoading && <strong>Loading...</strong>}
+          {error && <strong>Something went wrong!</strong>}
+          {weatherInfo && !isLoading ? (
+            weatherInfo.map((weather) => (
+              <ForecastItem
+                key={Math.random()} // NEED TO CHANGE THIS - PLACEHOLDER ONLY
+                day={weather.applicable_date}
+                icon={weather.weather_state_abbr}
+                temp={weather.the_temp}
+                min={weather.min_temp}
+                max={weather.max_temp}
+                speed={weather.wind_speed}
+                direction={weather.wind_direction_compass}
+              />
+            ))
+          ) : (
+            <strong>Choose a city!</strong>
+          )}
         </FlexContainer>
       </Card>
     </React.Fragment>
