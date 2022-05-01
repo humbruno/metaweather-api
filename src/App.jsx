@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import useHttp from "./hooks/use-http";
+import useHttp from "./hooks/use-http"; //custom hook to fetch data with AXIOS
 
-import cities from "./data/cities";
+import cities from "./data/cities"; //local JS file with cities to select from
 
 import GlobalStyles from "./components/styles/Global";
 import { Card } from "./components/styles/Card.styled";
@@ -10,8 +10,8 @@ import { FlexContainer } from "./components/styles/FlexContainer.styled";
 import ForecastItem from "./components/ForecastItem/ForecastItem";
 
 function App() {
-  const [weatherInfo, setWeatherInfo] = useState(null);
-  const [activeCityButton, setActiveCityButton] = useState(null);
+  const [weatherInfo, setWeatherInfo] = useState(null); //will be set to an array of items once fetching of data is complete
+  const [activeCityButton, setActiveCityButton] = useState(null); // this will be compared against each city's unique ID to style the selected city
 
   const { isLoading, error, sendRequest: fetchForecast } = useHttp();
 
@@ -25,12 +25,13 @@ function App() {
   let content = "";
 
   if (!weatherInfo && !isLoading) {
-    content = <strong>Choose your city!</strong>;
+    content = <strong>Choose your city!</strong>; //inital state when component mounts
   } else if (isLoading) {
-    content = <strong>Loading...</strong>;
+    content = <strong>Inspecting the clouds...</strong>; //loading state when city is selected
   } else if (error) {
-    content = <strong>Something went wrong!</strong>;
+    content = <strong>Something went wrong!</strong>; //error message if fetching fails
   } else if (weatherInfo && !isLoading) {
+    //rendered forecast after loading finished
     content = weatherInfo.map((weather) => (
       <ForecastItem
         key={weather.applicable_date}

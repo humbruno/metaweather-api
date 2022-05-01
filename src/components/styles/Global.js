@@ -25,6 +25,21 @@ body {
 
 h1 {
     color: #e7e7eb;
+
+    display: inline;
+    position: relative;
+    
+    &::before {
+    content: "";
+    background: rgba(226, 91, 136, 0.8);
+    position: absolute;
+    left: -3%;
+    bottom: 3px;
+    height: 8px;
+    width: 110%;
+    z-index: -1;
+    border-radius: 35px;
+  }
 }
 
 `;
