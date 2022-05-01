@@ -7,7 +7,7 @@ export const Button = styled.button`
   border: 0;
   border-radius: 8px;
 
-  background-color: #6e707a;
+  background-color: ${(props) => props.bg || "#6e707a"};
   color: #e7e7eb;
 
   font-weight: 700;

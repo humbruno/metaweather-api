@@ -11,13 +11,39 @@ import ForecastItem from "./components/ForecastItem/ForecastItem";
 
 function App() {
   const [weatherInfo, setWeatherInfo] = useState(null);
+  const [activeCityButton, setActiveCityButton] = useState(null);
 
   const { isLoading, error, sendRequest: fetchForecast } = useHttp();
 
   const clickHandler = async (woeid) => {
+    setActiveCityButton(woeid);
+
     const url = `https://www.metaweather.com/api/location/${woeid}`;
     fetchForecast(url, setWeatherInfo);
   };
+
+  let content = "";
+
+  if (!weatherInfo && !isLoading) {
+    content = <strong>Choose your city!</strong>;
+  } else if (isLoading) {
+    content = <strong>Loading...</strong>;
+  } else if (error) {
+    content = <strong>Something went wrong!</strong>;
+  } else if (weatherInfo && !isLoading) {
+    content = weatherInfo.map((weather) => (
+      <ForecastItem
+        key={weather.applicable_date}
+        day={weather.applicable_date}
+        icon={weather.weather_state_abbr}
+        temp={weather.the_temp}
+        min={weather.min_temp}
+        max={weather.max_temp}
+        speed={weather.wind_speed}
+        direction={weather.wind_direction_compass}
+      />
+    ));
+  }
 
   return (
     <React.Fragment>
@@ -26,31 +52,16 @@ function App() {
       <Card>
         <FlexContainer>
           {cities.map((city) => (
-            <Button onClick={() => clickHandler(city.woeid)} key={city.woeid}>
+            <Button
+              onClick={() => clickHandler(city.woeid)}
+              key={city.woeid}
+              bg={activeCityButton === city.woeid ? "#e25b88cc" : null}
+            >
               {city.name}
             </Button>
           ))}
         </FlexContainer>
-        <FlexContainer>
-          {isLoading && <strong>Loading...</strong>}
-          {error && <strong>Something went wrong!</strong>}
-          {weatherInfo && !isLoading ? (
-            weatherInfo.map((weather) => (
-              <ForecastItem
-                key={Math.random()} // NEED TO CHANGE THIS - PLACEHOLDER ONLY
-                day={weather.applicable_date}
-                icon={weather.weather_state_abbr}
-                temp={weather.the_temp}
-                min={weather.min_temp}
-                max={weather.max_temp}
-                speed={weather.wind_speed}
-                direction={weather.wind_direction_compass}
-              />
-            ))
-          ) : (
-            <strong>Choose a city!</strong>
-          )}
-        </FlexContainer>
+        <FlexContainer>{content}</FlexContainer>
       </Card>
     </React.Fragment>
   );
