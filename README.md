@@ -24,9 +24,9 @@
 
 ## 💻 Project
 
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ipsam provident iusto aut a earum ad vero dolor veritatis consectetur.
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ipsam provident iusto aut a earum ad vero dolor veritatis consectetur.
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ipsam provident iusto aut a earum ad vero dolor veritatis consectetur.
+Weather forecast for the next 5 days using the MetaWeather public API.
+
+Select one of five big cities to see what the weather will look like in the near future.
 
 Dependencies used for this project:
 
