@@ -7,13 +7,13 @@ export const Forecast = styled.div`
   padding: 20px;
   border-radius: 12px;
   margin-top: 20px;
-  border: 2px solid #e7e7eb;
 
   min-width: 12rem;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   gap: 10px;
 
   img {

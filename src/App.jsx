@@ -37,6 +37,7 @@ function App() {
         key={weather.applicable_date}
         day={weather.applicable_date}
         icon={weather.weather_state_abbr}
+        iconAlt={weather.weather_state_name}
         temp={weather.the_temp}
         min={weather.min_temp}
         max={weather.max_temp}
@@ -49,14 +50,16 @@ function App() {
   return (
     <React.Fragment>
       <GlobalStyles />
-      <h1>MetaWeather</h1>
+      <header>
+        <h1>MetaWeather</h1>
+      </header>
       <Card>
         <FlexContainer>
           {cities.map((city) => (
             <Button
               onClick={() => clickHandler(city.woeid)}
               key={city.woeid}
-              bg={activeCityButton === city.woeid ? "#e25b88cc" : null}
+              bg={activeCityButton === city.woeid ? "#e25b88cc" : ""} //set different background if city is selected
             >
               {city.name}
             </Button>
